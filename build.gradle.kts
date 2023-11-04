@@ -14,6 +14,7 @@ plugins {
 }
 
 private val ktlintVersion: String by project
+private val bucket4jVersion: String by project
 
 group = "me.bossm0n5t3r"
 version = "0.0.1-SNAPSHOT"
@@ -37,6 +38,9 @@ dependencies {
     runtimeOnly("io.r2dbc:r2dbc-h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+
+    // Bucket4j
+    implementation("com.bucket4j:bucket4j-core:$bucket4jVersion")
 }
 
 tasks.withType<KotlinCompile> {
