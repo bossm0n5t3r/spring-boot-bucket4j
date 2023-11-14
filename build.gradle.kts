@@ -15,6 +15,8 @@ plugins {
 
 private val ktlintVersion: String by project
 private val bucket4jVersion: String by project
+private val jose4jVersion: String by project
+private val kotlinLoggingVersion: String by project
 
 group = "me.bossm0n5t3r"
 version = "0.0.1-SNAPSHOT"
@@ -41,6 +43,12 @@ dependencies {
 
     // Bucket4j
     implementation("com.bucket4j:bucket4j-core:$bucket4jVersion")
+
+    // jose.4.j
+    implementation("org.bitbucket.b_c:jose4j:$jose4jVersion")
+
+    // kotlin-logging
+    implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
 }
 
 tasks.withType<KotlinCompile> {
