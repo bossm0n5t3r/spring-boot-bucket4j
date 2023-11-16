@@ -11,4 +11,5 @@ object Constants {
     }
 
     const val NANO_SECONDS = 1_000_000_000
+    const val MESSAGE = "message"
 }
