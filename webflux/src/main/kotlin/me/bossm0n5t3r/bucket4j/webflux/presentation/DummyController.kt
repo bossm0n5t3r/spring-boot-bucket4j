@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/webflux")
 class DummyController {
     @GetMapping
     fun healthCheck(): Mono<ResponseEntity<Unit>> = ResponseEntity.ok().build<Unit>().toMono()
