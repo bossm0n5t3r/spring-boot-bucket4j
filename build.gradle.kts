@@ -21,47 +21,64 @@ private val kotlinLoggingVersion: String by project
 group = "me.bossm0n5t3r"
 version = "0.0.1-SNAPSHOT"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = false
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("io.r2dbc:r2dbc-h2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
+subprojects {
+    apply(plugin = "kotlin")
+    apply(plugin = "kotlin-spring")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
-    // Bucket4j
-    implementation("com.bucket4j:bucket4j-core:$bucket4jVersion")
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.targetCompatibility = JavaVersion.VERSION_17
 
-    // jose.4.j
-    implementation("org.bitbucket.b_c:jose4j:$jose4jVersion")
-
-    // kotlin-logging
-    implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
     }
-}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 
-ktlint {
-    version.set(ktlintVersion)
+    ktlint {
+        version.set(ktlintVersion)
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+        implementation("org.springframework:spring-context")
+        implementation("org.springframework:spring-web")
+
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+        runtimeOnly("com.h2database:h2")
+
+        // Bucket4j
+        implementation("com.bucket4j:bucket4j-core:$bucket4jVersion")
+
+        // jose.4.j
+        implementation("org.bitbucket.b_c:jose4j:$jose4jVersion")
+
+        // kotlin-logging
+        implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
+    }
 }

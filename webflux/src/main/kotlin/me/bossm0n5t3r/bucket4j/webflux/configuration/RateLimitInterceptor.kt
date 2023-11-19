@@ -1,4 +1,4 @@
-package me.bossm0n5t3r.bucket4j.configuration
+package me.bossm0n5t3r.bucket4j.webflux.configuration
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import me.bossm0n5t3r.bucket4j.application.PricingPlanService

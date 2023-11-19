@@ -1,4 +1,4 @@
-package me.bossm0n5t3r.bucket4j
+package me.bossm0n5t3r.bucket4j.webflux
 
 import io.github.bucket4j.Bucket
 import kotlinx.coroutines.delay

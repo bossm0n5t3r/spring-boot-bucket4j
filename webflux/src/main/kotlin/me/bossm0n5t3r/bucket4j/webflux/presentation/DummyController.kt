@@ -1,4 +1,4 @@
-package me.bossm0n5t3r.bucket4j.presentation
+package me.bossm0n5t3r.bucket4j.webflux.presentation
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

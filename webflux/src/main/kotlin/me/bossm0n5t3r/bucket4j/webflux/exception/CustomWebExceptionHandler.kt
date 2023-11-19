@@ -1,7 +1,9 @@
-package me.bossm0n5t3r.bucket4j.exception
+package me.bossm0n5t3r.bucket4j.webflux.exception
 
 import jakarta.annotation.Priority
 import me.bossm0n5t3r.bucket4j.constant.Constants.MESSAGE
+import me.bossm0n5t3r.bucket4j.exception.CommonException
+import me.bossm0n5t3r.bucket4j.exception.ServerExceptionResponse
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler
 import org.springframework.http.HttpStatus
 import org.springframework.http.codec.HttpMessageWriter
@@ -59,7 +61,7 @@ class CustomWebExceptionHandler : ErrorWebExceptionHandler {
     }
 
     private fun handleServerWebInputException(ex: ServerWebInputException): Mono<Tuple2<ServerResponse, ServerExceptionResponse>> {
-        val responseBody = mapOf("ServerWebInputException" to listOf(ex.message))
+        val responseBody = mapOf("ServerWebInputException" to listOf(ex.message.toString()))
         val serverExceptionResponse = ServerExceptionResponse(responseBody)
         return ServerResponse
             .status(HttpStatus.BAD_REQUEST)
