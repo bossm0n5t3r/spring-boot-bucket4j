@@ -6,7 +6,6 @@ import me.bossm0n5t3r.bucket4j.constant.Constants.Headers.X_RATE_LIMIT_REMAINING
 import me.bossm0n5t3r.bucket4j.constant.Constants.Headers.X_RATE_LIMIT_RETRY_AFTER_SECONDS
 import me.bossm0n5t3r.bucket4j.constant.Constants.NANO_SECONDS
 import me.bossm0n5t3r.bucket4j.constant.Constants.Token.BEARER_
-import me.bossm0n5t3r.bucket4j.exception.TooManyRequestException
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -38,14 +37,7 @@ class RateLimitInterceptor(
                     val waitForRefill = probe.nanosToWaitForRefill / NANO_SECONDS
                     exchange.response.headers.set(X_RATE_LIMIT_RETRY_AFTER_SECONDS, waitForRefill.toString())
                     exchange.response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS)
-                    return@flatMap Mono.error(
-                        TooManyRequestException(
-                            httpHeaders =
-                                HttpHeaders().apply {
-                                    this[X_RATE_LIMIT_RETRY_AFTER_SECONDS] = waitForRefill.toString()
-                                },
-                        ),
-                    )
+                    return@flatMap exchange.response.setComplete()
                 }
                 chain.filter(exchange)
             }
