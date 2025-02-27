@@ -105,22 +105,21 @@ class JWTProvider {
             false
         }
 
-    fun getEmail(token: String): String? {
-        return try {
+    fun getEmail(token: String): String? =
+        try {
             val claims = JWT_CONSUMER.processToClaims(token)
             claims.getClaimValueAsString(EMAIL)
         } catch (e: Exception) {
             null
         }
-    }
 
-    fun getRole(token: String): UserRole? {
-        return try {
+    fun getRole(token: String): UserRole? =
+        try {
             val claims = JWT_CONSUMER.processToClaims(token)
-            claims.getClaimValueAsString(ROLE)
+            claims
+                .getClaimValueAsString(ROLE)
                 ?.let { UserRole.valueOf(it) }
         } catch (e: Exception) {
             null
         }
-    }
 }

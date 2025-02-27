@@ -24,7 +24,8 @@ class RateLimitInterceptor(
         exchange: ServerWebExchange,
         chain: WebFilterChain,
     ): Mono<Void> {
-        return Mono.just(getAuthorizationHeader(exchange))
+        return Mono
+            .just(getAuthorizationHeader(exchange))
             .map { getRowToken(it) }
             .flatMap { token ->
                 val bucket = pricingPlanService.resolveBucket(token)
@@ -43,17 +44,15 @@ class RateLimitInterceptor(
             }
     }
 
-    private fun getAuthorizationHeader(exchange: ServerWebExchange): String {
-        return exchange.request.headers[HttpHeaders.AUTHORIZATION]
+    private fun getAuthorizationHeader(exchange: ServerWebExchange): String =
+        exchange.request.headers[HttpHeaders.AUTHORIZATION]
             ?.firstOrNull { it.isNotEmpty() }
             ?: ""
-    }
 
-    private fun getRowToken(authorizationHeader: String): String {
-        return if (authorizationHeader.startsWith(BEARER_)) {
+    private fun getRowToken(authorizationHeader: String): String =
+        if (authorizationHeader.startsWith(BEARER_)) {
             authorizationHeader.substringAfter(BEARER_)
         } else {
             authorizationHeader
         }
-    }
 }

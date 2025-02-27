@@ -14,11 +14,11 @@ class BucketTest {
         // bucket with capacity 20 tokens and
         // with refilling speed 1 token per each 6 second (refillTokens = 10, refillPeriod = 60s)
         val bucket =
-            Bucket.builder()
+            Bucket
+                .builder()
                 .addLimit {
                     it.capacity(20).refillGreedy(10, Duration.ofMinutes(1L))
-                }
-                .build()
+                }.build()
 
         repeat(20) {
             assertTrue(bucket.tryConsume(1))
@@ -35,11 +35,11 @@ class BucketTest {
             // bucket with capacity 20 tokens and
             // with refilling speed 1 token per each 1 second (refillTokens = 10, refillPeriod = 10s)
             val bucket =
-                Bucket.builder()
+                Bucket
+                    .builder()
                     .addLimit {
                         it.capacity(tokenCapacity).refillGreedy(refillTokens.toLong(), refillPeriod)
-                    }
-                    .build()
+                    }.build()
 
             bucket.tryConsume(tokenCapacity) // Consume all directly
             assertFalse(bucket.tryConsume(1)) // Check emtpy

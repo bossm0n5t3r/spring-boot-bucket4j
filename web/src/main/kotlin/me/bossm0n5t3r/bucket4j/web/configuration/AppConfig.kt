@@ -9,7 +9,8 @@ class AppConfig(
     private val rateLimitInterceptor: RateLimitInterceptor,
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(rateLimitInterceptor)
+        registry
+            .addInterceptor(rateLimitInterceptor)
             .addPathPatterns("/web/**") // prevent call twice
     }
 }

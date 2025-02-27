@@ -20,7 +20,8 @@ class PricingPlanService(
 
         val pricingPlan = PricingPlan.resolvePlanFromUserRole(userRole)
 
-        return Bucket.builder()
+        return Bucket
+            .builder()
             .addLimit(pricingPlan.limit)
             .build()
     }
