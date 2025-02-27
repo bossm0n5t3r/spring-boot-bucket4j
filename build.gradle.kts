@@ -26,7 +26,10 @@ repositories {
 }
 
 ktlint {
-    version.set("1.5.0")
+    version.set(
+        rootProject.libs.versions.ktlint.version
+            .get(),
+    )
 }
 
 subprojects {
@@ -78,7 +81,10 @@ subprojects {
     }
 
     ktlint {
-        version.set("1.5.0")
+        version.set(
+            rootProject.libs.versions.ktlint.version
+                .get(),
+        )
     }
 
     repositories {
