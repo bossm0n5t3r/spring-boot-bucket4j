@@ -9,8 +9,8 @@ tasks.test {
 dependencies {
     api(project(":core"))
 
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation(rootProject.libs.spring.boot.starter.data.jpa)
+    implementation(rootProject.libs.spring.boot.starter.web)
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(rootProject.libs.spring.boot.starter.test)
 }

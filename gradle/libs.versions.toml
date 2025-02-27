@@ -1,0 +1,48 @@
+[versions]
+kotlin-version = "2.1.10"
+spring-boot-version = "3.4.3"
+spring-dependencies-version = "1.1.7"
+ktlint-gradle-version = "12.1.2"
+bucket4j-version = "8.10.1"
+jose4j-version = "0.9.6"
+kotlin-logging-jvm-version = "7.0.4"
+
+[libraries]
+# Spring
+spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "spring-boot-version" }
+spring-context = { group = "org.springframework", name = "spring-context" }
+spring-web = { group = "org.springframework", name = "spring-web" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+spring-boot-starter-data-r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc" }
+spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
+
+# Kotlin
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin" }
+
+# Reactor
+reactor-kotlin-extensions = { group = "io.projectreactor.kotlin", name = "reactor-kotlin-extensions" }
+kotlinx-coroutines-reactor = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor" }
+reactor-test = { group = "io.projectreactor", name = "reactor-test" }
+
+# Database
+h2 = { group = "com.h2database", name = "h2" }
+r2dbc-h2 = { group = "io.r2dbc", name = "r2dbc-h2" }
+
+# Bucket4j
+bucket4j-core = { group = "com.bucket4j", name = "bucket4j-core", version.ref = "bucket4j-version" }
+
+# Security
+jose4j = { group = "org.bitbucket.b_c", name = "jose4j", version.ref = "jose4j-version" }
+
+# Logging
+kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlin-logging-jvm-version" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-version" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot-version" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependencies-version" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle-version" }

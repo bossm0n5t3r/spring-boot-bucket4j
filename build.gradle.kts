@@ -1,52 +1,75 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    val kotlinVersion = "1.9.20"
-    val springFrameworkBootVersion = "3.1.5"
-    val springDependencyManagementVersion = "1.1.3"
-    val ktlintGradleVersion = "11.6.1"
-
-    id("org.springframework.boot") version springFrameworkBootVersion
-    id("io.spring.dependency-management") version springDependencyManagementVersion
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
-    id("org.jlleitschuh.gradle.ktlint") version ktlintGradleVersion
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.ktlint)
 }
-
-private val ktlintVersion: String by project
-private val bucket4jVersion: String by project
-private val jose4jVersion: String by project
-private val kotlinLoggingVersion: String by project
 
 group = "me.bossm0n5t3r"
 version = "0.0.1-SNAPSHOT"
 
-tasks.bootJar {
-    enabled = false
-}
-
-tasks.jar {
-    enabled = false
+tasks {
+    bootJar {
+        enabled = false
+    }
+    jar {
+        enabled = false
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
+ktlint {
+    version.set("1.5.0")
+}
+
 subprojects {
-    apply(plugin = "kotlin")
-    apply(plugin = "kotlin-spring")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(
+        plugin =
+            rootProject.libs.plugins.kotlin.jvm
+                .get()
+                .pluginId,
+    )
+    apply(
+        plugin =
+            rootProject.libs.plugins.kotlin.spring
+                .get()
+                .pluginId,
+    )
+    apply(
+        plugin =
+            rootProject.libs.plugins.spring.boot
+                .get()
+                .pluginId,
+    )
+    apply(
+        plugin =
+            rootProject.libs.plugins.spring.dependency.management
+                .get()
+                .pluginId,
+    )
+    apply(
+        plugin =
+            rootProject.libs.plugins.ktlint
+                .get()
+                .pluginId,
+    )
 
-    java.sourceCompatibility = JavaVersion.VERSION_17
-    java.targetCompatibility = JavaVersion.VERSION_17
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "17"
+    tasks.named<KotlinJvmCompile>("compileKotlin") {
+        compilerOptions {
+            freeCompilerArgs.add("-Xjsr305=strict")
+            jvmTarget = JvmTarget.JVM_21
         }
     }
 
@@ -55,7 +78,7 @@ subprojects {
     }
 
     ktlint {
-        version.set(ktlintVersion)
+        version.set("1.5.0")
     }
 
     repositories {
@@ -63,22 +86,20 @@ subprojects {
     }
 
     dependencies {
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-        implementation("org.springframework:spring-context")
-        implementation("org.springframework:spring-web")
-
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-        runtimeOnly("com.h2database:h2")
+        annotationProcessor(rootProject.libs.spring.boot.configuration.processor)
+        implementation(rootProject.libs.spring.context)
+        implementation(rootProject.libs.spring.web)
+        implementation(rootProject.libs.kotlin.reflect)
+        implementation(rootProject.libs.jackson.module.kotlin)
+        runtimeOnly(rootProject.libs.h2)
 
         // Bucket4j
-        implementation("com.bucket4j:bucket4j-core:$bucket4jVersion")
+        implementation(rootProject.libs.bucket4j.core)
 
-        // jose.4.j
-        implementation("org.bitbucket.b_c:jose4j:$jose4jVersion")
+        // jose4j
+        implementation(rootProject.libs.jose4j)
 
         // kotlin-logging
-        implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
+        implementation(rootProject.libs.kotlin.logging)
     }
 }
